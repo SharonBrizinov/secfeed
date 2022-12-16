@@ -25,7 +25,7 @@ Simply because many blogs/vendors are not supporting any form of push notificati
     r"EXTRACT WITH REGEX AND APPEND TO BASE ADDRESS",
     ["LIST", "OF", "KEYWORDS", "THAT AT LEAST", "ONE", "MUST", "EXISTS", "IN", "URL"]
   )
-
+```
 
 ## Tracking list
 - https://claroty.com/team82
