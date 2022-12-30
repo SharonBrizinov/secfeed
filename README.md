@@ -12,6 +12,16 @@ The script will query a list of websites and extract urls matching to specific r
 - Use `SHOULD_REPORT` to send live notifications to the Slack channel
 - Run using: `python3 secfeed.py`
 
+## With Docker
+- Copy `.env.sample` to `.env` in the root folder
+- Edit `SLACK_URL` with your [Slack channel](https://api.slack.com/messaging/webhooks)
+- Use `IS_TEST_MODE` to test if it works
+- Use `SHOULD_REPORT` to send live notifications to the Slack channel
+- Build docker image using: `docker build -t secfeed .`
+- Run docker image using: `docker run --env-file ./.env secfeed`
+
+Alternatively, you can also download the docker image directly from this repo under the **Packages** section.
+
 ## Why not RSS / Push notifications / netsec ?
 Simply because many blogs/vendors are not supporting any form of push notifications or RSS. In addition not all CVE/Blog/Advisory are reaching main stream forums like Reddit.
 

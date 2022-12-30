@@ -7,10 +7,13 @@ import pickle
 import re
 import sys
 import json
+from environs import Env
+
+env = Env()
 
 DB_PATH = "secfeed.db"
 LIST_PARSED_DATA = []
-SLACK_URL = "https://hooks.slack.com/services/XXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZ" # replace this with real slack web hook url
+SLACK_URL = env.str("SLACK_URL", "")
 USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; SAMSUNG SM-G930F Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/44.0.2403.133 Mobile Safari/537.36"
 HEADERS = {"User-Agent": USER_AGENT}
 SEC_FEEDS = {
@@ -145,8 +148,8 @@ SEC_FEEDS = {
 }
 
 SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
-IS_TEST_MODE = True
-SHOULD_REPORT = False
+IS_TEST_MODE = env.bool("IS_TEST_MODE", False)
+SHOULD_REPORT = env.bool("SHOULD_REPORT", True)
 
 def setup_logger():
     logging.basicConfig(filename="secfeed.log", filemode="w", level=logging.DEBUG)
