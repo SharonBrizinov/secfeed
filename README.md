@@ -29,7 +29,7 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 
 ## Tracking list
 - https://claroty.com/team82
-- https://www.us-cert.gov/ics/advisories/
+- https://www.cisa.gov/
 - https://cert.europa.eu/publications/security-advisories/
 - https://www.tenable.com/security/research
 - https://srcincite.io/blog/

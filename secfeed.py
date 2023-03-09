@@ -26,10 +26,16 @@ SEC_FEEDS = {
             r"href=\"/team82/research/([^\"]+)\"",
             None),
 
-        # https://www.us-cert.gov/ics/advisories/icsa-20-147-01
-        "https://www.us-cert.gov/ics/advisories/advisories.xml" : 
-            ("https://www.us-cert.gov/ics/advisories/",
-            r"ics/advisories/(icsm?a-\d+\-\d+\-\d+)",
+        # https://www.cisa.gov/news-events/cybersecurity-advisories
+        "https://www.cisa.gov/news-events/cybersecurity-advisories" : 
+            ("https://www.cisa.gov/",
+            r"<a href=\"/(news-events/ics-medical-advisories/icsma-\d+-\d+-\d+)\" target=\"_self\">",
+            None),
+
+        # https://www.cisa.gov/news-events/cybersecurity-advisories
+        "https://www.cisa.gov/news-events/cybersecurity-advisories/" : 
+            ("https://www.cisa.gov/",
+            r"<a href=\"/(news-events/ics-advisories/icsa-\d+-\d+-\d+)\" target=\"_self\">",
             None),
 
         # https://cert.europa.eu/static/SecurityAdvisories/2022/CERT-EU-SA2022-082.pdf
