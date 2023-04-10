@@ -11,7 +11,7 @@ import json
 DB_PATH = "secfeed.db"
 LIST_PARSED_DATA = []
 SLACK_URL = "https://hooks.slack.com/services/XXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZ" # replace this with real slack web hook url
-USER_AGENT = "Mozilla/5.0 (Linux; Android 6.0; SAMSUNG SM-G930F Build/MMB29K) AppleWebKit/537.36 (KHTML, like Gecko) SamsungBrowser/4.0 Chrome/44.0.2403.133 Mobile Safari/537.36"
+USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; rv:110.0) Gecko/20100101 Firefox/110.0)"
 HEADERS = {"User-Agent": USER_AGENT}
 SEC_FEEDS = {
          # Example:
@@ -147,6 +147,12 @@ SEC_FEEDS = {
             ("",
             r"(http://www.seebug.org/vuldb/ssvid-\d+)",
             None),            
+
+        # https://www.forescout.com/research-labs-overview/
+       	"https://www.forescout.com/research-labs-overview/":
+            ("https://www.forescout.com/blog/",
+            r"href=\"/blog/(.*)/\"",
+            None),
 
 }
 
