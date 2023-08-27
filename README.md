@@ -50,3 +50,6 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://starlabs.sg/blog/
 - https://www.seebug.org
 - https://www.forescout.com/research-labs-overview/
+- https://www.interruptlabs.co.uk/labs
+- https://www.flashback.sh/blog
+- https://xl-sec.github.io/AppSecEzine/latest.rss

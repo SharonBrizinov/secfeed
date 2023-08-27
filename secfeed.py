@@ -154,16 +154,19 @@ SEC_FEEDS = {
             r"href=\"/blog/(.*?)\"",
             None),
 
+        # https://www.interruptlabs.co.uk/labs
         "https://www.interruptlabs.co.uk/labs":
             ("https://www.interruptlabs.co.uk/",
             r"href=\"/articles/(.*?)\"",
             None),
 
+        # https://www.flashback.sh/blog
         "https://www.flashback.sh/blog":
             ("https://www.flashback.sh/",
             r"href=\"/blog/(.*?)\"",
             None),
 
+        # https://xl-sec.github.io/AppSecEzine/latest.rss
         "https://xl-sec.github.io/AppSecEzine/latest.rss":
             ("",
             r"<link>(.*)</link>",
