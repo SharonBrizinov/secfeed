@@ -156,13 +156,13 @@ SEC_FEEDS = {
 
         # https://www.interruptlabs.co.uk/labs
         "https://www.interruptlabs.co.uk/labs":
-            ("https://www.interruptlabs.co.uk/",
+            ("https://www.interruptlabs.co.uk/articles/",
             r"href=\"/articles/(.*?)\"",
             None),
 
         # https://www.flashback.sh/blog
         "https://www.flashback.sh/blog":
-            ("https://www.flashback.sh/",
+            ("https://www.flashback.sh/blog/",
             r"href=\"/blog/(.*?)\"",
             None),
 
