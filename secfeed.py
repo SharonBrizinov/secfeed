@@ -151,9 +151,26 @@ SEC_FEEDS = {
         # https://www.forescout.com/research-labs-overview/
        	"https://www.forescout.com/research-labs-overview/":
             ("https://www.forescout.com/blog/",
-            r"href=\"/blog/(.*)/\"",
+            r"href=\"/blog/(.*?)\"",
             None),
 
+        # https://www.interruptlabs.co.uk/labs
+        "https://www.interruptlabs.co.uk/labs":
+            ("https://www.interruptlabs.co.uk/",
+            r"href=\"/articles/(.*?)\"",
+            None),
+
+        # https://www.flashback.sh/blog
+        "https://www.flashback.sh/blog":
+            ("https://www.flashback.sh/",
+            r"href=\"/blog/(.*?)\"",
+            None),
+
+        # https://xl-sec.github.io/AppSecEzine/latest.rss
+        "https://xl-sec.github.io/AppSecEzine/latest.rss":
+            ("",
+            r"<link>(.*)</link>",
+            None)
 }
 
 SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
