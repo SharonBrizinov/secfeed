@@ -175,7 +175,7 @@ SEC_FEEDS = {
         # https://sploitus.com/rss
         "https://sploitus.com/rss":
             ("",
-            r"<link>(.*)</link>",
+            r"<link>(.*?)</link>",
             None)
 }
 
@@ -225,7 +225,7 @@ while True:
         base_url, regex_str, keywords = SEC_FEEDS[url_feed]
         # Get data
         try:
-            data = requests.get(sec_feed, headers=HEADERS)
+            data = requests.get(sec_feed, headers=HEADERS, timeout=10)
         except Exception as e:
             continue
         # Extract
