@@ -170,6 +170,12 @@ SEC_FEEDS = {
         "https://xl-sec.github.io/AppSecEzine/latest.rss":
             ("",
             r"<link>(.*)</link>",
+            None),
+
+        # https://sploitus.com/rss
+        "https://sploitus.com/rss":
+            ("",
+            r"<link>(.*)</link>",
             None)
 }
 

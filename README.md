@@ -53,3 +53,4 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://www.interruptlabs.co.uk/labs
 - https://www.flashback.sh/blog
 - https://xl-sec.github.io/AppSecEzine/latest.rss
+- https://sploitus.com
