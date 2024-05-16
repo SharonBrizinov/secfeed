@@ -90,7 +90,7 @@ SEC_FEEDS = {
             None),
         
         # https://research.nccgroup.com/category/technical-advisory/
-        "https://research.nccgroup.com/category/technical-advisory/":
+        "https://research.nccgroup.com/":
             ("https://research.nccgroup.com/",
             r"\"https://research.nccgroup.com/(\d+/\d+/\d+/[^\"]+)\"",
             None),
@@ -106,16 +106,16 @@ SEC_FEEDS = {
             r"advisories\/(AWE-\d+-\d+\.html)\">", 
             None),
 
-        # https://www.nozominetworks.com/blog/technical-analysis-of-the-winbox-payload-in-windigo/
-        "https://www.nozominetworks.com/labs/labs-blogs/" : 
+        # https://www.nozominetworks.com/blog/ge-healthcare-vivid-ultrasound-vulnerabilities
+        "https://www.nozominetworks.com/labs": 
             ("https://www.nozominetworks.com/blog/", 
-            r"<a href\=\"https://www.nozominetworks.com/blog/([^\"]+)\" >", 
+            r"<a href\=\"/blog/([^\"]+)\"", 
             None), 
 
         # https://www.armis.com/research/tlstorm/
-        "https://www.armis.com/armis-research/" : 
+        "https://www.armis.com/armis-labs/": 
             ("https://www.armis.com/research/", 
-            r"armis\.com\/research\/([\w+\d+\-]+\/)\"><", 
+            r"armis\.com\/research\/([^\"]+)\"", 
             None), 
 
         # https://research.checkpoint.com/?p=26395
@@ -125,9 +125,9 @@ SEC_FEEDS = {
             None),
 
         # https://blog.neodyme.io/posts/secure-randomness-part-2/
-        "https://blog.neodyme.io/":
-            ("https://blog.neodyme.io",
-            r"tr href=\"(/posts/[^\"]+)\" class",
+        "https://neodyme.io/en/blog/":
+            ("https://neodyme.io/",
+            r"<a href=\"([^\"]+)\" class",
             None),
  
         # https://blog.viettelcybersecurity.com/security-wall-of-s7commplus-3/
@@ -173,10 +173,16 @@ SEC_FEEDS = {
             None),
 
         # https://sploitus.com/rss
-        "https://sploitus.com/rss":
-            ("",
-            r"<link>(.*?)</link>",
-            None)
+        # "https://sploitus.com/rss":
+        #     ("",
+        #     r"<link>(.*?)</link>",
+        #     None)
+
+        # https://icsstrive.com/
+        "https://icsstrive.com":
+            ("https://icsstrive.com/incident/",
+            r"href=\"https://icsstrive\.com/incident/(.*?)\">",
+            None),
 }
 
 SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
