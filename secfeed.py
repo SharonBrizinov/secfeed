@@ -183,6 +183,18 @@ SEC_FEEDS = {
             ("https://icsstrive.com/incident/",
             r"href=\"https://icsstrive\.com/incident/(.*?)\">",
             None),
+
+        # https://wordfence.com/
+        "https://www.wordfence.com/threat-intel":
+            ("https://www.wordfence.com/threat-intel/vulnerabilities/",
+            r"href=\"https://www\.wordfence\.com/threat-intel/vulnerabilities/(.*?)\">",
+            ["bypass", "unauth","preauth"]),
+
+        # https://sploitify.haxx.it
+        "https://sploitify.haxx.it":
+            ("https://sploitify.haxx.it",
+            r"href=\"(/exploits/\d+/CVE-\d+-\d+/)",
+            None),
 }
 
 SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
@@ -229,6 +241,7 @@ while True:
         url_feed = sec_feed
         # one keyword must be present
         base_url, regex_str, keywords = SEC_FEEDS[url_feed]
+        keywords = keywords or []
         # Get data
         try:
             data = requests.get(sec_feed, headers=HEADERS, timeout=10)
@@ -237,7 +250,8 @@ while True:
         # Extract
         extracted_datas = re.findall(regex_str, data.text)
         for extracted_data in extracted_datas:
-            if not keywords or any([keyword in extracted_data for keyword in keywords]):
+            extracted_data = extracted_data or ""
+            if not keywords or any([keyword.lower() in extracted_data.lower() for keyword in keywords]):
                 full_url = base_url + extracted_data
                 if IS_TEST_MODE:
                     print("  [-] {}".format(full_url))

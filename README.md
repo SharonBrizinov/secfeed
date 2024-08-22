@@ -54,3 +54,5 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://www.flashback.sh/blog
 - https://xl-sec.github.io/AppSecEzine/latest.rss
 - https://sploitus.com
+- https://www.wordfence.com/threat-intel
+- https://sploitify.haxx.it
