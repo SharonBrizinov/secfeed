@@ -7,12 +7,26 @@ import pickle
 import re
 import sys
 import json
+import urllib3
+
+urllib3.disable_warnings()
+
 
 DB_PATH = "secfeed.db"
 LIST_PARSED_DATA = []
-SLACK_URL = "https://hooks.slack.com/services/XXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZ" # replace this with real slack web hook url
+
+IS_TEST_MODE = True
+SHOULD_REPORT = False
+
+# replace this with real slack/telegram IDs
+SLACK_URL = None            #"https://hooks.slack.com/services/XXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZ" 
+TELEGRAM_BOT = None         # "1111111111:AAAAAAAAAAAAAAAAAA-XXXXXXXXXXXXX"
+TELEGRAM_BOT_CHAT = None    # "123456789"
+
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; rv:110.0) Gecko/20100101 Firefox/110.0)"
 HEADERS = {"User-Agent": USER_AGENT}
+SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
+
 SEC_FEEDS = {
          # Example:
          # "URL TO QUERY TO GET LINKS" : 
@@ -38,11 +52,11 @@ SEC_FEEDS = {
             r"<a href=\"/(news-events/ics-advisories/icsa-\d+-\d+-\d+)\" target=\"_self\">",
             None),
 
-        # https://cert.europa.eu/static/SecurityAdvisories/2022/CERT-EU-SA2022-082.pdf
-        "https://cert.europa.eu/publications/security-advisories/" :
-            ("https://cert.europa.eu/static/SecurityAdvisories/",
-            r"(\d+/CERT-EU-SA\d+-\d+\.pdf)", 
-            None),
+       # <a href="/publications/security-advisories/2024-118/" class="publications--list--item--link">
+       "https://cert.europa.eu/publications/security-advisories/" :
+           ("https://cert.europa.eu/publications/security-advisories/",
+           r"/publications/security-advisories/(\d+\-\d+/)", 
+           None),
 
         # https://www.tenable.com/security/research/tra-2020-34
         "https://www.tenable.com/security/research" : 
@@ -87,12 +101,6 @@ SEC_FEEDS = {
          "https://www.zeroscience.mk/en/vulnerabilities" : 
             ("https://www.zeroscience.mk/en/vulnerabilities/", 
             r"(ZSL-20\d+-\d+.php)", 
-            None),
-        
-        # https://research.nccgroup.com/category/technical-advisory/
-        "https://research.nccgroup.com/":
-            ("https://research.nccgroup.com/",
-            r"\"https://research.nccgroup.com/(\d+/\d+/\d+/[^\"]+)\"",
             None),
 
         # https://ssd-disclosure.com/apple-safari-javascriptcore-inspector-type-confusion/
@@ -190,16 +198,27 @@ SEC_FEEDS = {
             r"href=\"https://www\.wordfence\.com/threat-intel/vulnerabilities/(.*?)\">",
             ["bypass", "unauth","preauth"]),
 
-        # https://sploitify.haxx.it
-        "https://sploitify.haxx.it":
-            ("https://sploitify.haxx.it",
-            r"href=\"(/exploits/\d+/CVE-\d+-\d+/)",
+        "https://www.zerodayinitiative.com/blog/":
+            ("https://www.zerodayinitiative.com/blog/",
+            r"href=\"/blog/([^\"]+)\"",
             None),
-}
 
-SLEEP_TIME = 60 * 60 * 2 # 2 hours -+ 10-5000 seconds
-IS_TEST_MODE = True
-SHOULD_REPORT = False
+        "https://www.wiz.io/blog/tag/research":
+            ("https://www.wiz.io/blog/",
+            r"href=\"/blog/([^\"]+)\"",
+            None),
+
+        "https://labs.watchtowr.com/":
+            ("https://labs.watchtowr.com/",
+            r"gh-card-link\" href=\"/([^\"]+)\"",
+            None),
+
+        "https://blog.qualys.com/comments/feed":
+            ("",
+            r"<link>(.*?)</link>",
+            None),
+        
+}
 
 def setup_logger():
     logging.basicConfig(filename="secfeed.log", filemode="w", level=logging.DEBUG)
@@ -214,9 +233,18 @@ def setup_logger():
 
 def notify_slack(url):
     if SHOULD_REPORT:
-        data = {"text" : url, "unfurl_links": True, "unfurl_media": True}
-        resp = requests.post(SLACK_URL, data=json.dumps(data))
-        logging.debug("Slack responded: '{}'".format(resp.text))
+        if SLACK_URL:
+            data = {"text" : url, "unfurl_links": True, "unfurl_media": True}
+            resp = requests.post(SLACK_URL, data=json.dumps(data))
+            logging.debug("Slack responded: '{}'".format(resp.text))
+
+def notify_telegram(url):
+    if SHOULD_REPORT:
+        if TELEGRAM_BOT and TELEGRAM_BOT_CHAT:
+            telegram_url_full = f"https://api.telegram.org/bot{TELEGRAM_BOT}/sendMessage"
+            resp = requests.post(telegram_url_full, data={"chat_id": TELEGRAM_BOT_CHAT, "text": url})
+            logging.debug("Telegram responded: '{}'".format(resp.text))
+
 setup_logger()
 
 
@@ -244,7 +272,7 @@ while True:
         keywords = keywords or []
         # Get data
         try:
-            data = requests.get(sec_feed, headers=HEADERS, timeout=10)
+            data = requests.get(sec_feed, headers=HEADERS, timeout=10, verify=False)
         except Exception as e:
             continue
         # Extract
@@ -260,6 +288,7 @@ while True:
                         logging.info("Saving new url, and notifying slack: '{}'".format(full_url))
                         LIST_PARSED_DATA.append(full_url)
                         notify_slack(full_url)
+                        notify_telegram(full_url)
     if not IS_TEST_MODE:
         logging.info("Saving everything back to DB: {}".format(DB_PATH))
         with open(DB_PATH, "wb") as f:

@@ -46,7 +46,6 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://www.armis.com/research/ 
 - https://research.checkpoint.com/
 - https://blog.neodyme.io
-- https://blog.viettelcybersecurity.com
 - https://starlabs.sg/blog/
 - https://www.seebug.org
 - https://www.forescout.com/research-labs-overview/
@@ -56,3 +55,7 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://sploitus.com
 - https://www.wordfence.com/threat-intel
 - https://sploitify.haxx.it
+- https://www.zerodayinitiative.com/blog
+- https://www.wiz.io/blog/tag/research
+- https://labs.watchtowr.com
+- https://blog.qualys.com
