@@ -22,6 +22,10 @@ SHOULD_REPORT = False
 SLACK_URL = None            #"https://hooks.slack.com/services/XXXXXXX/YYYYYYYYYYY/ZZZZZZZZZZ" 
 TELEGRAM_BOT = None         # "1111111111:AAAAAAAAAAAAAAAAAA-XXXXXXXXXXXXX"
 TELEGRAM_BOT_CHAT = None    # "123456789"
+SIGNAL_URL = None           # "http://127.0.0.1:8080/v2/send"
+SIGNAL_SENDER = None        # "+4412345"
+SIGNAL_RECIEPIENTS = None   # [ "+4412345" ]
+DISCORD_URL = None          #"https://discord.com/api/webhooks/YYYYYYYYYYY/XXXXXXXXXXXXXXXXX"
 
 USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; rv:110.0) Gecko/20100101 Firefox/110.0)"
 HEADERS = {"User-Agent": USER_AGENT}
@@ -245,6 +249,22 @@ def notify_telegram(url):
             resp = requests.post(telegram_url_full, data={"chat_id": TELEGRAM_BOT_CHAT, "text": url})
             logging.debug("Telegram responded: '{}'".format(resp.text))
 
+def notify_signal(url):
+    if SHOULD_REPORT:
+        if SIGNAL_URL and SIGNAL_SENDER and SIGNAL_RECIEPIENTS:
+            data = {"message": url, "number": SIGNAL_SENDER, "recipients": SIGNAL_RECIEPIENTS }
+            resp = requests.post(SIGNAL_URL, data=json.dumps(data))
+            logging.debug("Signal responded: '{}'".format(resp.text))
+
+def notify_discord(url):
+    if SHOULD_REPORT:
+        if DISCORD_URL:
+            data = {"content": url}
+            header = {'Content-Type': 'application/json'}
+            resp = requests.post(DISCORD_URL, headers=header,data=json.dumps(data))
+            logging.debug("Discord responded: '{}'".format(resp.text))
+
+
 setup_logger()
 
 
@@ -289,6 +309,8 @@ while True:
                         LIST_PARSED_DATA.append(full_url)
                         notify_slack(full_url)
                         notify_telegram(full_url)
+                        notify_signal(full_url)
+                        notify_discord(full_url)
     if not IS_TEST_MODE:
         logging.info("Saving everything back to DB: {}".format(DB_PATH))
         with open(DB_PATH, "wb") as f:
