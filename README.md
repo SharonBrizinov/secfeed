@@ -23,7 +23,8 @@ Simply because many blogs/vendors are not supporting any form of push notificati
   (
     "BASE ADDRESS",
     r"EXTRACT WITH REGEX AND APPEND TO BASE ADDRESS",
-    ["LIST", "OF", "KEYWORDS", "THAT AT LEAST", "ONE", "MUST", "EXISTS", "IN", "URL"]
+    ["LIST", "OF", "KEYWORDS", "THAT AT LEAST", "ONE", "MUST", "EXISTS", "IN", "URL"],
+    "UserAgent"
   )
 ```
 
@@ -52,7 +53,6 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://www.interruptlabs.co.uk/labs
 - https://www.flashback.sh/blog
 - https://xl-sec.github.io/AppSecEzine/latest.rss
-- https://sploitus.com
 - https://www.wordfence.com/threat-intel
 - https://sploitify.haxx.it
 - https://www.zerodayinitiative.com/blog
