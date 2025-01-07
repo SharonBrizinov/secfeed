@@ -233,7 +233,12 @@ SEC_FEEDS = {
             r"<link>(.*?)</link>",
             None,
             USER_AGENT),
-        
+            
+         "https://cyberdanube.com/security-research/":
+            ("",
+            r'https://cyberdanube\.com/security-research/[a-zA-Z0-9\-/]+/',
+            None,
+            USER_AGENT),
 }
 
 def setup_logger():

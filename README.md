@@ -59,3 +59,4 @@ Simply because many blogs/vendors are not supporting any form of push notificati
 - https://www.wiz.io/blog/tag/research
 - https://labs.watchtowr.com
 - https://blog.qualys.com
+- https://cyberdanube.com/security-research/
